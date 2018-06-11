@@ -1,4 +1,4 @@
-package gyqw.xiaobaitumultithread;
+package gyqw.xiaobaitu.multithread;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
