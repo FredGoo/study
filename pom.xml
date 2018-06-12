@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>xiaobaitu-multi-thread</module>
+        <module>multi-thread</module>
     </modules>
 
     <build>
