@@ -1,6 +1,6 @@
-package gyqw.xiaobaitu.multithread;
+package gyqw.xiaobaitu.apollo;
 
-import gyqw.xiaobaitu.multithread.model.MyCallable;
+import gyqw.xiaobaitu.apollo.model.MyCallable;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package gyqw.xiaobaitu.multithread;
+package gyqw.xiaobaitu.apollo;
 
 /**
  * @author fred
@@ -34,8 +34,12 @@ public class Thread1Main implements Runnable {
 
         Thread thread1 = new Thread(new Thread1Main(1, lock));
         Thread thread2 = new Thread(new Thread1Main(2, lock));
+        Thread thread3 = new Thread(new Thread1Main(3, lock));
+        Thread thread4 = new Thread(new Thread1Main(4, lock));
 
         thread1.start();
         thread2.start();
+        thread3.start();
+        thread4.start();
     }
 }

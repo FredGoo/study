@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>apollo</module>
         <module>multi-thread</module>
     </modules>
 

@@ -1,6 +1,4 @@
-package gyqw.xiaobaitu.multithread.model;
-
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+package gyqw.xiaobaitu.apollo.model;
 
 import java.util.Date;
 import java.util.concurrent.Callable;
