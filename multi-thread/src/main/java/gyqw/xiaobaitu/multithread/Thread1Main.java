@@ -1,4 +1,4 @@
-package gyqw.xiaobaitu.apollo;
+package gyqw.xiaobaitu.multithread;
 
 /**
  * @author fred

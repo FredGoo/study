@@ -1,4 +1,4 @@
-package gyqw.xiaobaitu.apollo;
+package gyqw.xiaobaitu.multithread;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

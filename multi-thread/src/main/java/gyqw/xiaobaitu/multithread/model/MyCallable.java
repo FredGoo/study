@@ -1,4 +1,4 @@
-package gyqw.xiaobaitu.apollo.model;
+package gyqw.xiaobaitu.multithread.model;
 
 import java.util.Date;
 import java.util.concurrent.Callable;
