@@ -13,6 +13,7 @@
         <module>apollo</module>
         <module>multi-thread</module>
         <module>edit-distance</module>
+        <module>ignite</module>
     </modules>
 
     <build>
