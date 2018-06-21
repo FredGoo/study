@@ -15,6 +15,7 @@
         <module>edit-distance</module>
         <module>ignite</module>
         <module>map</module>
+        <module>binary-tree</module>
     </modules>
 
     <build>
