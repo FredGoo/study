@@ -13,7 +13,7 @@ public class CosineStringSimilarMain {
     }
 
     private static double getSimilarity(String content1, String content2) {
-        Map<Integer, int[]> wordMap = new HashMap<Integer, int[]>();
+        Map<Integer, int[]> wordMap = new HashMap<>();
 
         // 将两个字符串中的中文字符以及出现的总数封装到，AlgorithmMap中
         char[] char1 = content1.toCharArray();
