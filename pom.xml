@@ -16,6 +16,7 @@
         <module>ignite</module>
         <module>map</module>
         <module>binary-tree</module>
+        <module>sort</module>
     </modules>
 
     <build>
