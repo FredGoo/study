@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class CosineStringSimilarMain {
     public static void main(String[] args) {
-        String address1 = "湖北省-武汉市-东西湖区 革新大道四明路物流园c5门";
-        String address2 = "湖北省-武汉市-东西湖区 革新大道四明路南特1号";
+        String address1 = "即务有限公中文政立路一百号撒";
+        String address2 = "jk";
         System.out.println(getSimilarity(address1, address2));
     }
 
@@ -62,7 +62,7 @@ public class CosineStringSimilarMain {
             sqdoc1 += c[0] * c[0];
             sqdoc2 += c[1] * c[1];
         }
-        return denominator / Math.sqrt(sqdoc1 * sqdoc2);
+        return sqdoc1 * sqdoc2 == 0 ? 0 : denominator / Math.sqrt(sqdoc1 * sqdoc2);
     }
 
     private static boolean isHanZi(char ch) {

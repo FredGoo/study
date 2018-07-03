@@ -91,7 +91,7 @@ public class CollocationQueryMain {
 //            appInfoCache.query(query0);
 
             // 标准查询
-            SqlFieldsQuery query = new SqlFieldsQuery("select  idno as idno from appinfo where mobile='15001964062'");
+            SqlFieldsQuery query = new SqlFieldsQuery("select distinct idno as idno from appinfo where mobile='15001964062'");
             long start = System.currentTimeMillis();
             FieldsQueryCursor<List<?>> cursor = appInfoCache.query(query);
             long end = System.currentTimeMillis();

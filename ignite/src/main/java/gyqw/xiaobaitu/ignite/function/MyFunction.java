@@ -72,7 +72,7 @@ public class MyFunction {
             sqdoc1 += c[0] * c[0];
             sqdoc2 += c[1] * c[1];
         }
-        return denominator / Math.sqrt(sqdoc1 * sqdoc2);
+        return sqdoc1 * sqdoc2 == 0 ? 0 : denominator / Math.sqrt(sqdoc1 * sqdoc2);
     }
 
     private static boolean isHanZi(char ch) {
