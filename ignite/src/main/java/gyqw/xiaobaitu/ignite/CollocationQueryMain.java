@@ -34,30 +34,84 @@ public class CollocationQueryMain {
         // 启动集群
         Ignite ignite = Ignition.start(cfg);
 
+        for (String name : ignite.cacheNames()) {
+            System.out.println(name);
+        }
+
         // 注册自定义函数
-        CacheConfiguration ccfg = new CacheConfiguration();
+//        ignite.destroyCache("appInfoCache");
+        CacheConfiguration ccfg = new CacheConfiguration("appInfoCache");
         ccfg.setSqlFunctionClasses(MyFunction.class);
-        ccfg.setSqlSchema("APPINFO");
-        ccfg.setName("SQL_PUBLIC_APPINFO");
+        ccfg.setSqlSchema("PUBLIC");
+
+//        ccfg.setName("SQL_PUBLIC_APPINFO");
         IgniteCache appInfoCache = ignite.getOrCreateCache(ccfg);
 
         try {
+            // 创建表
+            SqlFieldsQuery query0 = new SqlFieldsQuery("CREATE TABLE appInfo (\n" +
+                    "ORDERID VARCHAR,\n" +
+                    "STORELEVEL VARCHAR,\n" +
+                    "SELLERNAME VARCHAR,\n" +
+                    "DEVICENO VARCHAR,\n" +
+                    "SPFULLADDRESS VARCHAR,\n" +
+                    "CPNYTEL VARCHAR,\n" +
+                    "CUSTOMBIRTHDAY VARCHAR,\n" +
+                    "ORDERCREATETIME VARCHAR,\n" +
+                    "GPSFULLADDRESS VARCHAR,\n" +
+                    "LOANMONEY VARCHAR,\n" +
+                    "STOREADDRESS VARCHAR,\n" +
+                    "CMNAME VARCHAR,\n" +
+                    "HOMEFULLADDRESS VARCHAR,\n" +
+                    "ORDERTYPE VARCHAR,\n" +
+                    "CUSTOMNAME VARCHAR,\n" +
+                    "CPNYFULLADDRESS VARCHAR,\n" +
+                    "STORENAME VARCHAR,\n" +
+                    "MERCHANTNAME VARCHAR,\n" +
+                    "C2RELATION VARCHAR,\n" +
+                    "ORDERGPS VARCHAR,\n" +
+                    "C1RELATION VARCHAR,\n" +
+                    "C2MOBILE VARCHAR,\n" +
+                    "SELLERMOBILE VARCHAR,\n" +
+                    "CPNYNAME VARCHAR,\n" +
+                    "IDNO VARCHAR,\n" +
+                    "CUSTOMBANKNO VARCHAR,\n" +
+                    "C1MOBILE VARCHAR,\n" +
+                    "C2NAME VARCHAR,\n" +
+                    "MOBILE VARCHAR,\n" +
+                    "STOREINDUSTRY VARCHAR,\n" +
+                    "LOANPERIOD VARCHAR,\n" +
+                    "MONTHLYPAY VARCHAR,\n" +
+                    "MAC VARCHAR,\n" +
+                    "HOUSEHOLDFULLADDRESS VARCHAR,\n" +
+                    "C1NAME VARCHAR,\n" +
+                    "age INTEGER,SPFULLADDRESS_PROVINCE varchar ,SPFULLADDRESS_CITY varchar ,SPFULLADDRESS_AREA varchar ,SPFULLADDRESS_DETAIL varchar ,STOREADDRESS_PROVINCE varchar ,STOREADDRESS_CITY varchar ,STOREADDRESS_AREA varchar ,STOREADDRESS_DETAIL varchar ,HOUSEHOLDFULLADDRESS_PROVINCE varchar ,HOUSEHOLDFULLADDRESS_CITY varchar ,HOUSEHOLDFULLADDRESS_AREA varchar ,HOUSEHOLDFULLADDRESS_DETAIL varchar ,HOMEFULLADDRESS_PROVINCE varchar ,HOMEFULLADDRESS_CITY varchar ,HOMEFULLADDRESS_AREA varchar ,HOMEFULLADDRESS_DETAIL varchar ,CPNYFULLADDRESS_PROVINCE varchar ,CPNYFULLADDRESS_CITY varchar ,CPNYFULLADDRESS_AREA varchar ,CPNYFULLADDRESS_DETAIL varchar, STORECODE varchar, MERCHANTCODE varchar,\n" +
+                    "gender varchar,\n" +
+                    "       PRIMARY KEY (orderid))");
+//            appInfoCache.query(query0);
+
             // 标准查询
-            SqlFieldsQuery query = new SqlFieldsQuery("select distinct idno as idno, sqr(2) from appinfo where mobile='15001964062'");
+            SqlFieldsQuery query = new SqlFieldsQuery("select  idno as idno from appinfo where mobile='15001964062'");
             long start = System.currentTimeMillis();
             FieldsQueryCursor<List<?>> cursor = appInfoCache.query(query);
             long end = System.currentTimeMillis();
             Iterator<List<?>> iterator = cursor.iterator();
-            System.out.println("Query result:");
-            List<?> row = iterator.next();
-            System.out.println(">>>    " + row.get(0) + " time: " + (end - start));
+            if (iterator.hasNext()) {
+                List<?> row = iterator.next();
+                System.out.println(">>>    " + row.get(0) + " time: " + (end - start));
+            }
 
             // 模糊查询
-            SqlFieldsQuery query1 = new SqlFieldsQuery("select sqr(2)");
+            SqlFieldsQuery query1 = new SqlFieldsQuery("select HOMEFULLADDRESS, strSimilar('北京 昌平 计算机啊吗', HOMEFULLADDRESS) from appinfo where strSimilar('北京 昌平 计算机啊吗', HOMEFULLADDRESS) > 0.8");
+            start = System.currentTimeMillis();
             QueryCursor<List<?>> cursor1 = appInfoCache.query(query1);
-            iterator = cursor.iterator();
-            List<?> row1 = iterator.next();
-            System.out.println("调用sqr函数后的number数据为：" + row1.get(0));
+            end = System.currentTimeMillis();
+            iterator = cursor1.iterator();
+            while (iterator.hasNext()) {
+                List<?> row1 = iterator.next();
+                System.out.println("调用strSimilar函数后的number数据为：" + row1.get(0) + ", " + row1.get(1));
+            }
+            System.out.println("time: " + (end - start));
 
         } catch (Exception e) {
             e.printStackTrace();
