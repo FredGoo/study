@@ -1,18 +1,28 @@
-package gyqw.xiaobaitu.distance;
+package gyqw.xiaobaitu.ignite.function;
+
+import org.apache.ignite.cache.query.annotations.QuerySqlFunction;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class CosineStringSimilarMain {
-    public static void main(String[] args) {
-        String address1 = "即务有限公中文政立路一百号撒";
-        String address2 = "jk";
-        System.out.println(getSimilarity(address1, address2));
+/**
+ * @author fred
+ * @date 2018/07/02 15:48
+ */
+public class MyFunction {
+    @QuerySqlFunction
+    public static int sqr(int x) {
+        return x * x;
     }
 
-    private static double getSimilarity(String content1, String content2) {
+    @QuerySqlFunction
+    public static double strSimilar(String content1, String content2) {
+        if (content1 == null || content2 == null ||
+                content1.trim().equals("") || content2.trim().equals("")) {
+            return 0d;
+        }
         Map<Integer, int[]> wordMap = new HashMap<>();
 
         // 将两个字符串中的中文字符以及出现的总数封装到，AlgorithmMap中

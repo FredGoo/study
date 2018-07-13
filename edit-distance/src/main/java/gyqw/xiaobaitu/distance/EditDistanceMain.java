@@ -10,7 +10,7 @@ public class EditDistanceMain {
         System.out.println(distance("上海市", "上海杨浦区"));
         System.out.println(distance("上海市", "上海杨浦"));
         System.out.println(distance("上海", "上海杨浦"));
-        System.out.println(distance("即科金融信息服务(上海)有限公司", "即科金融有限公司"));
+        System.out.println(distance("即务有限公中文政立路一百号撒", "jk"));
     }
 
     private static int distance(String s1, String s2) {
