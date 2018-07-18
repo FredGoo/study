@@ -11,18 +11,25 @@ public class TreeMain {
 
     public static void main(String[] args) {
         TreeMain treeMain = new TreeMain();
-        treeMain.insert(1, 1d);
-        treeMain.insert(2, 2d);
+        treeMain.insert(13, 13d);
+        treeMain.insert(2, 52d);
+        treeMain.insert(5, 2d);
+        treeMain.insert(21, 277d);
+        treeMain.insert(42, 62d);
 
-        Node node0 = treeMain.find(2);
+        Node node0 = treeMain.find(21);
         if (node0 != null) {
             node0.showNode();
         }
-        Node node1 = treeMain.find(1);
+        Node node1 = treeMain.find(13);
         if (node1 != null) {
             node1.showNode();
         }
 
+        Node[] border = treeMain.border();
+        border[0].showNode();
+        border[1].showNode();
+        
         System.out.println("end");
     }
 
@@ -79,5 +86,27 @@ public class TreeMain {
         }
 
         return current;
+    }
+
+    public Node[] border() {
+        Node[] borderNodeArray = new Node[2];
+
+        Node current = root;
+        Node min = null;
+        while (current != null) {
+            min = current;
+            current = current.getLeftNode();
+        }
+        borderNodeArray[0] = min;
+
+        current = root;
+        Node max = null;
+        while (current != null) {
+            max = current;
+            current = current.getRightNode();
+        }
+        borderNodeArray[1] = max;
+
+        return borderNodeArray;
     }
 }
