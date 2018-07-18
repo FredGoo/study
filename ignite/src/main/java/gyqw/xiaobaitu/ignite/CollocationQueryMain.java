@@ -49,45 +49,69 @@ public class CollocationQueryMain {
 
         try {
             // 创建表
-            SqlFieldsQuery query0 = new SqlFieldsQuery("CREATE TABLE appInfo (\n" +
-                    "ORDERID VARCHAR,\n" +
-                    "STORELEVEL VARCHAR,\n" +
-                    "SELLERNAME VARCHAR,\n" +
-                    "DEVICENO VARCHAR,\n" +
-                    "SPFULLADDRESS VARCHAR,\n" +
-                    "CPNYTEL VARCHAR,\n" +
-                    "CUSTOMBIRTHDAY VARCHAR,\n" +
-                    "ORDERCREATETIME VARCHAR,\n" +
-                    "GPSFULLADDRESS VARCHAR,\n" +
-                    "LOANMONEY VARCHAR,\n" +
-                    "STOREADDRESS VARCHAR,\n" +
-                    "CMNAME VARCHAR,\n" +
-                    "HOMEFULLADDRESS VARCHAR,\n" +
-                    "ORDERTYPE VARCHAR,\n" +
-                    "CUSTOMNAME VARCHAR,\n" +
-                    "CPNYFULLADDRESS VARCHAR,\n" +
-                    "STORENAME VARCHAR,\n" +
-                    "MERCHANTNAME VARCHAR,\n" +
-                    "C2RELATION VARCHAR,\n" +
-                    "ORDERGPS VARCHAR,\n" +
-                    "C1RELATION VARCHAR,\n" +
-                    "C2MOBILE VARCHAR,\n" +
-                    "SELLERMOBILE VARCHAR,\n" +
-                    "CPNYNAME VARCHAR,\n" +
-                    "IDNO VARCHAR,\n" +
-                    "CUSTOMBANKNO VARCHAR,\n" +
-                    "C1MOBILE VARCHAR,\n" +
-                    "C2NAME VARCHAR,\n" +
-                    "MOBILE VARCHAR,\n" +
-                    "STOREINDUSTRY VARCHAR,\n" +
-                    "LOANPERIOD VARCHAR,\n" +
-                    "MONTHLYPAY VARCHAR,\n" +
-                    "MAC VARCHAR,\n" +
-                    "HOUSEHOLDFULLADDRESS VARCHAR,\n" +
-                    "C1NAME VARCHAR,\n" +
-                    "age INTEGER,SPFULLADDRESS_PROVINCE varchar ,SPFULLADDRESS_CITY varchar ,SPFULLADDRESS_AREA varchar ,SPFULLADDRESS_DETAIL varchar ,STOREADDRESS_PROVINCE varchar ,STOREADDRESS_CITY varchar ,STOREADDRESS_AREA varchar ,STOREADDRESS_DETAIL varchar ,HOUSEHOLDFULLADDRESS_PROVINCE varchar ,HOUSEHOLDFULLADDRESS_CITY varchar ,HOUSEHOLDFULLADDRESS_AREA varchar ,HOUSEHOLDFULLADDRESS_DETAIL varchar ,HOMEFULLADDRESS_PROVINCE varchar ,HOMEFULLADDRESS_CITY varchar ,HOMEFULLADDRESS_AREA varchar ,HOMEFULLADDRESS_DETAIL varchar ,CPNYFULLADDRESS_PROVINCE varchar ,CPNYFULLADDRESS_CITY varchar ,CPNYFULLADDRESS_AREA varchar ,CPNYFULLADDRESS_DETAIL varchar, STORECODE varchar, MERCHANTCODE varchar,\n" +
-                    "gender varchar,\n" +
-                    "       PRIMARY KEY (orderid))");
+            String query0s = "CREATE TABLE if not exists appInfo (" +
+                    "ORDERID VARCHAR," +
+                    "STORELEVEL VARCHAR," +
+                    "SELLERNAME VARCHAR," +
+                    "DEVICENO VARCHAR," +
+                    "SPFULLADDRESS VARCHAR," +
+                    "CPNYTEL VARCHAR," +
+                    "CUSTOMBIRTHDAY VARCHAR," +
+                    "ORDERCREATETIME VARCHAR," +
+                    "GPSFULLADDRESS VARCHAR," +
+                    "LOANMONEY VARCHAR," +
+                    "STOREADDRESS VARCHAR," +
+                    "CMNAME VARCHAR," +
+                    "HOMEFULLADDRESS VARCHAR," +
+                    "ORDERTYPE VARCHAR," +
+                    "CUSTOMNAME VARCHAR," +
+                    "CPNYFULLADDRESS VARCHAR," +
+                    "STORENAME VARCHAR," +
+                    "MERCHANTNAME VARCHAR," +
+                    "C2RELATION VARCHAR," +
+                    "ORDERGPS VARCHAR," +
+                    "C1RELATION VARCHAR," +
+                    "C2MOBILE VARCHAR," +
+                    "SELLERMOBILE VARCHAR," +
+                    "CPNYNAME VARCHAR," +
+                    "IDNO VARCHAR," +
+                    "CUSTOMBANKNO VARCHAR," +
+                    "C1MOBILE VARCHAR," +
+                    "C2NAME VARCHAR," +
+                    "MOBILE VARCHAR," +
+                    "STOREINDUSTRY VARCHAR," +
+                    "LOANPERIOD VARCHAR," +
+                    "MONTHLYPAY VARCHAR," +
+                    "MAC VARCHAR," +
+                    "HOUSEHOLDFULLADDRESS VARCHAR," +
+                    "C1NAME VARCHAR," +
+                    "age INTEGER," +
+                    "SPFULLADDRESS_PROVINCE varchar ," +
+                    "SPFULLADDRESS_CITY varchar ," +
+                    "SPFULLADDRESS_AREA varchar ," +
+                    "SPFULLADDRESS_DETAIL varchar ," +
+                    "STOREADDRESS_PROVINCE varchar ," +
+                    "STOREADDRESS_CITY varchar ," +
+                    "STOREADDRESS_AREA varchar ," +
+                    "STOREADDRESS_DETAIL varchar ," +
+                    "HOUSEHOLDFULLADDRESS_PROVINCE varchar ," +
+                    "HOUSEHOLDFULLADDRESS_CITY varchar ," +
+                    "HOUSEHOLDFULLADDRESS_AREA varchar ," +
+                    "HOUSEHOLDFULLADDRESS_DETAIL varchar ," +
+                    "HOMEFULLADDRESS_PROVINCE varchar ," +
+                    "HOMEFULLADDRESS_CITY varchar ," +
+                    "HOMEFULLADDRESS_AREA varchar ," +
+                    "HOMEFULLADDRESS_DETAIL varchar ," +
+                    "CPNYFULLADDRESS_PROVINCE varchar ," +
+                    "CPNYFULLADDRESS_CITY varchar ," +
+                    "CPNYFULLADDRESS_AREA varchar ," +
+                    "CPNYFULLADDRESS_DETAIL varchar, " +
+                    "STORECODE varchar, " +
+                    "MERCHANTCODE varchar," +
+                    "gender varchar," +
+                    "PRIMARY KEY (orderid))";
+
+            SqlFieldsQuery query0 = new SqlFieldsQuery(query0s);
 //            appInfoCache.query(query0);
 
             // 标准查询
