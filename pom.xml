@@ -17,6 +17,7 @@
         <module>map</module>
         <module>binary-tree</module>
         <module>sort</module>
+        <module>drools</module>
     </modules>
 
     <build>

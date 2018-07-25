@@ -1,0 +1,13 @@
+package gyqw.xiaobaitu.drools;
+
+import gyqw.xiaobaitu.drools.model.AppInfoModel;
+
+        rule "old-lady"
+            salience 1
+            when
+                $p : AppInfoModel(age > 40);
+            then
+                $p.setHouseHoldAddressCity("少年");
+                retract($p);
+                System.out.println($p.getStoreAddressCity()+" "+$p.getHouseHoldAddressCity());
+        end
