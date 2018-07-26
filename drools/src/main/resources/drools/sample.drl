@@ -1,13 +1,14 @@
 package gyqw.xiaobaitu.drools;
 
-import gyqw.xiaobaitu.drools.model.AppInfoModel;
+import java.util.Map;
 
         rule "old-lady"
             salience 1
+            no-loop
             when
-                $p : AppInfoModel(age > 40);
+                $map:Map();
+                eval($map.get("HOUSEHOLDFULLADDRESS_CITY") != $map.get("STOREADDRESS_CITY"));
+                eval($map.get("GENDER") == "F");
+                eval(((Integer)$map.get("AGE")) > 40);
             then
-                $p.setHouseHoldAddressCity("少年");
-                retract($p);
-                System.out.println($p.getStoreAddressCity()+" "+$p.getHouseHoldAddressCity());
         end

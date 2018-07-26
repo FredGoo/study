@@ -1,12 +1,14 @@
 package gyqw.xiaobaitu.drools;
 
-import gyqw.xiaobaitu.drools.model.AppInfoModel;
 import org.kie.api.KieServices;
 import org.kie.api.builder.Results;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author fred
@@ -15,15 +17,20 @@ import org.kie.internal.utils.KieHelper;
 public class DroolsMain {
     public static void main(String[] args) {
         DroolsMain droolsMain = new DroolsMain();
-        KieSession kieSession = droolsMain.fromString();
+        KieSession kieSession = droolsMain.fromResource();
 
         try {
-            AppInfoModel appInfoModel = new AppInfoModel();
-            appInfoModel.setAge(99);
+            Map<String, Object> map = new HashMap<>();
+            map.put("HOUSEHOLDFULLADDRESS_CITY", "上海");
+            map.put("STOREADDRESS_CITY", "北京");
+            map.put("GENDER", "F");
+            map.put("AGE", 41);
 
-            kieSession.insert(appInfoModel);
-            int firedRules = kieSession.fireAllRules();
-            System.out.println(firedRules);
+            if (kieSession != null) {
+                kieSession.insert(map);
+                int firedRules = kieSession.fireAllRules();
+                System.out.println(firedRules);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,6 +51,7 @@ public class DroolsMain {
                 "                retract($p);\n" +
                 "                System.out.println($p.getStoreAddressCity()+\" \"+$p.getHouseHoldAddressCity());\n" +
                 "        end";
+        System.out.println(drl);
         KieHelper kieHelper = new KieHelper();
         kieHelper.addContent(drl, ResourceType.DRL);
 
