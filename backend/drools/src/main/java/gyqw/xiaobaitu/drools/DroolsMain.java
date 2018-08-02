@@ -22,7 +22,7 @@ public class DroolsMain {
         try {
             Map<String, Object> map = new HashMap<>();
             map.put("HOUSEHOLDFULLADDRESS_CITY", "上海");
-            map.put("STOREADDRESS_CITY", "北京");
+            map.put("STOREADDRESS_CITY", "上海");
             map.put("GENDER", "F");
             map.put("AGE", 41);
 

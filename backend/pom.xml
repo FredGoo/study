@@ -18,6 +18,7 @@
         <module>binary-tree</module>
         <module>sort</module>
         <module>drools</module>
+        <module>urule</module>
     </modules>
 
     <build>

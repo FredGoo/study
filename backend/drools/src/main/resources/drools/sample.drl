@@ -7,7 +7,7 @@ import java.util.Map;
             no-loop
             when
                 $map:Map();
-                eval($map.get("HOUSEHOLDFULLADDRESS_CITY") != $map.get("STOREADDRESS_CITY"));
+                eval(!$map.get("HOUSEHOLDFULLADDRESS_CITY").toString().equals($map.get("STOREADDRESS_CITY")));
                 eval($map.get("GENDER") == "F");
                 eval(((Integer)$map.get("AGE")) > 40);
             then
