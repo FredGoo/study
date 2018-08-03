@@ -1,5 +1,8 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+web/WEB-INF/lib
+web/WEB-INF/classes
+web/META-INF
 
 ### STS ###
 .apt_generated
