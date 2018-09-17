@@ -19,6 +19,7 @@
         <module>sort</module>
         <module>drools</module>
         <module>urule</module>
+        <module>rabbit-mq</module>
     </modules>
 
     <build>
