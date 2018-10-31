@@ -13,7 +13,6 @@
         <module>apollo</module>
         <module>multi-thread</module>
         <module>edit-distance</module>
-        <module>ignite</module>
         <module>map</module>
         <module>binary-tree</module>
         <module>sort</module>
