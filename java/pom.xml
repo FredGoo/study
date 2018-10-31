@@ -20,6 +20,7 @@
         <module>drools</module>
         <module>urule</module>
         <module>rabbit-mq</module>
+        <module>spring-boot</module>
     </modules>
 
     <build>

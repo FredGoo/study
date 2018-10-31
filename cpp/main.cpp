@@ -47,6 +47,10 @@ void printint() {
     }
 }
 
+int addFunc(int a, int b) {
+
+}
+
 int main() {
     printstring();
     printint();
