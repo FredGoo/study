@@ -1,4 +1,4 @@
-package main.java.gyqw.xiaobaitu.spring.boot;
+package gyqw.xiaobaitu.spring.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
