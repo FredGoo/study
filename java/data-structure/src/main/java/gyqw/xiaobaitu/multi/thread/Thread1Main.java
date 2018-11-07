@@ -1,4 +1,4 @@
-package gyqw.xiaobaitu.multithread;
+package gyqw.xiaobaitu.multi.thread;
 
 /**
  * @author fred

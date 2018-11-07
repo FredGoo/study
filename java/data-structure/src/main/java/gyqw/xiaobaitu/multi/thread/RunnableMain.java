@@ -1,6 +1,6 @@
-package gyqw.xiaobaitu.multithread;
+package gyqw.xiaobaitu.multi.thread;
 
-import gyqw.xiaobaitu.multithread.model.MyRunnable;
+import gyqw.xiaobaitu.multi.thread.model.MyRunnable;
 
 /**
  * @author fred
