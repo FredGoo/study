@@ -16,6 +16,7 @@
         <module>rabbit-mq</module>
         <module>spring-boot</module>
         <module>data-structure</module>
+        <module>dgraph</module>
     </modules>
 
     <build>
