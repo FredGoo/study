@@ -1,6 +1,6 @@
-package gyqw.xiaobaitu.dgraph;
+package gyqw.xiaobaitu.graph;
 
-import gyqw.xiaobaitu.dgraph.service.BaseService;
+import gyqw.xiaobaitu.graph.service.BaseService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DgraphTest {
-    private Logger logger = LoggerFactory.getLogger(DgraphTest.class);
+public class GraphTest {
+    private Logger logger = LoggerFactory.getLogger(GraphTest.class);
 
     private BaseService baseService;
 
@@ -22,7 +22,7 @@ public class DgraphTest {
     }
 
     @Test
-    public void dgraphTest() {
+    public void graphTest() {
         this.baseService.getAuth();
     }
 }

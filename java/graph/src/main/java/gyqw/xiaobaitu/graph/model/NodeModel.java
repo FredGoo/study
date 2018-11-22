@@ -1,4 +1,4 @@
-package gyqw.xiaobaitu.dgraph.model;
+package gyqw.xiaobaitu.graph.model;
 
 import java.io.Serializable;
 import java.util.List;

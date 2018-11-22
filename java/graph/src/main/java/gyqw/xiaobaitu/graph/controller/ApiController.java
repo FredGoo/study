@@ -1,4 +1,4 @@
-package gyqw.xiaobaitu.dgraph.controller;
+package gyqw.xiaobaitu.graph.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
