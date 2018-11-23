@@ -48,14 +48,14 @@ public class BaseService {
             Gson resultStr = new Gson();
             ResultModel resultModel = resultStr.fromJson(rawResponse, ResultModel.class);
 
-            walkNode(resultModel.getResult(), null);
+            walkNode(resultModel.getResult(), null, null);
             logger.info("节点数" + this.nodeNum);
         } catch (Exception e) {
             logger.error("getAuth error", e);
         }
     }
 
-    private void walkNode(List<NodeModel> nodeModelList, String parentCode) {
+    private void walkNode(List<NodeModel> nodeModelList, String parentCode, String parentText) {
         for (NodeModel nodeModel : nodeModelList) {
             try {
                 String[] textArr = nodeModel.getText().split("\\(");
@@ -63,12 +63,12 @@ public class BaseService {
                 graphNodeModel.setCode(textArr[1].substring(0, textArr[1].length() - 1));
                 graphNodeModel.setText(textArr[0]);
                 graphNodeModel.setParentCode(parentCode);
+                graphNodeModel.setParentText(parentText);
                 graphNodeModel.setState(nodeModel.getState());
-                logger.info(graphNodeModel.toString());
                 this.graphDao.mutate(graphNodeModel);
 
                 if (nodeModel.getChildren() != null) {
-                    walkNode(nodeModel.getChildren(), graphNodeModel.getCode());
+                    walkNode(nodeModel.getChildren(), graphNodeModel.getCode(), graphNodeModel.getText());
                 }
 
                 this.nodeNum++;

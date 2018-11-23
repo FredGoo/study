@@ -7,10 +7,20 @@ import java.io.Serializable;
  * 2018-11-22 10:11 AM
  */
 public class GraphNodeModel implements Serializable {
+    private Long id;
     private String code;
     private String text;
     private String parentCode;
+    private String parentText;
     private String state;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCode() {
         return code;
@@ -44,12 +54,22 @@ public class GraphNodeModel implements Serializable {
         this.state = state;
     }
 
+    public String getParentText() {
+        return parentText;
+    }
+
+    public void setParentText(String parentText) {
+        this.parentText = parentText;
+    }
+
     @Override
     public String toString() {
         return "GraphNodeModel{" +
-                "code='" + code + '\'' +
+                "id=" + id +
+                ", code='" + code + '\'' +
                 ", text='" + text + '\'' +
                 ", parentCode='" + parentCode + '\'' +
+                ", parentText='" + parentText + '\'' +
                 ", state='" + state + '\'' +
                 '}';
     }

@@ -66,8 +66,6 @@ public class DgraphDao implements GraphDao {
         } finally {
             txn.discard();
         }
-
-
     }
 
 }
