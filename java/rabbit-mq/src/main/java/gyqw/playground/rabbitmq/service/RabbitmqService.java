@@ -1,6 +1,7 @@
 package gyqw.playground.rabbitmq.service;
 
 import com.rabbitmq.client.*;
+import gyqw.playground.rabbitmq.mq.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Binding;
@@ -15,6 +16,10 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static java.lang.Thread.sleep;
 
 /**
  * @author fred
@@ -30,7 +35,7 @@ public class RabbitmqService {
     private String host = "192.168.101.41";
     private String username = "guest";
     private String password = "guest";
-    private String virutalHost = "/";
+    private String virtualHost = "/";
 
     public boolean isSend() {
         return send;
@@ -40,27 +45,39 @@ public class RabbitmqService {
         this.send = send;
     }
 
+    public RabbitmqService() {
+        generateQueueName();
+    }
+
     /**
      * 开始测试
      */
     public void initQueues() {
+        for (String queueName : this.rabbitMap.keySet()) {
+            if (this.rabbitMap.get(queueName) == null) {
+                // 建立连接
+                ConnectionFactory connectionFactory = connect();
+                // 建立rabbit admin
+                RabbitAdmin rabbitAdmin = createRabbitAdmin(connectionFactory);
+                // 绑定队列
+                declareQueue(rabbitAdmin, queueName);
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("admin", rabbitAdmin);
+                map.put("connect", connectionFactory);
+                this.rabbitMap.put(queueName, map);
+            }
+        }
+    }
+
+    /**
+     * 生成队列名称
+     */
+    private void generateQueueName() {
         for (int i = 0; i < 100; i++) {
             // 队列名称
             String queueName = "queue" + i;
-
-            // 建立连接
-            ConnectionFactory connectionFactory = connect();
-
-            // 建立rabbit admin
-            RabbitAdmin rabbitAdmin = createRabbitAdmin(connectionFactory);
-
-            // 绑定队列
-            declareQueue(rabbitAdmin, queueName);
-
-            Map<String, Object> map = new HashMap<>();
-            map.put("admin", rabbitAdmin);
-            map.put("connect", connectionFactory);
-            this.rabbitMap.put(queueName, map);
+            this.rabbitMap.put(queueName, null);
         }
     }
 
@@ -73,17 +90,35 @@ public class RabbitmqService {
         }
     }
 
+    /**
+     * 开始发送信息
+     */
     public void startSendMsg() {
         setSend(true);
 
+        ExecutorService pool = Executors.newCachedThreadPool();
         int i = 0;
         while (isSend()) {
             for (String queueName : this.rabbitMap.keySet()) {
-                String msg = "round: " + i + ", queue: " + queueName;
-                RabbitAdmin rabbitAdmin = (RabbitAdmin) this.rabbitMap.get(queueName).get("admin");
-                sendMsg(rabbitAdmin, queueName, msg);
+                try {
+                    // 发送信息
+                    String msg = "round: " + i + ", queue: " + queueName;
+                    RabbitAdmin rabbitAdmin = (RabbitAdmin) this.rabbitMap.get(queueName).get("admin");
+
+                    // 多线程
+                    pool.execute(new Sender(rabbitAdmin, this.exchangeName, queueName, msg));
+
+                    sleep(1);
+                } catch (Exception e) {
+                    logger.error("startSendMsg error", e);
+                }
             }
 
+            try {
+                sleep(1);
+            } catch (Exception e) {
+                logger.error("startSendMsg sleep error", e);
+            }
             i++;
         }
     }
@@ -96,7 +131,7 @@ public class RabbitmqService {
         connectionFactory.setHost(this.host);
         connectionFactory.setUsername(this.username);
         connectionFactory.setPassword(this.password);
-        connectionFactory.setVirtualHost(this.virutalHost);
+        connectionFactory.setVirtualHost(this.virtualHost);
         // 消息确认
         connectionFactory.setPublisherConfirms(true);
         connectionFactory.setPublisherReturns(true);
@@ -116,10 +151,12 @@ public class RabbitmqService {
     private void declareQueue(RabbitAdmin rabbitAdmin, String queueName) {
         if (rabbitAdmin.getQueueProperties(queueName) == null) {
             /*
-             queue 队列声明
-             durable=true,交换机持久化,rabbitmq服务重启交换机依然存在,保证不丢失; durable=false,相反
-             auto-delete=true:无消费者时，队列自动删除; auto-delete=false：无消费者时，队列不会自动删除
-             排他性，exclusive=true:首次申明的connection连接下可见; exclusive=false：所有connection连接下
+              durable=true: 交换机持久化,rabbitmq服务重启交换机依然存在,保证不丢失
+              durable=false: 相反
+              auto-delete=true: 无消费者时，队列自动删除;
+              auto-delete=false: 无消费者时，队列不会自动删除
+              exclusive=true: 首次申明的connection连接下可见;
+              exclusive=false: 所有connection连接下
              */
             Queue queue = new Queue(queueName);
             rabbitAdmin.declareQueue(queue);
@@ -138,13 +175,6 @@ public class RabbitmqService {
     }
 
     /**
-     * 发送信息
-     */
-    private void sendMsg(RabbitAdmin rabbitAdmin, String queueName, String msg) {
-        rabbitAdmin.getRabbitTemplate().convertAndSend(this.exchangeName, queueName, msg);
-    }
-
-    /**
      * 监听队列
      */
     private void messageContainer(String queueName) {
@@ -153,7 +183,7 @@ public class RabbitmqService {
             factory.setHost(this.host);
             factory.setUsername(this.username);
             factory.setPassword(this.password);
-            factory.setVirtualHost(this.virutalHost);
+            factory.setVirtualHost(this.virtualHost);
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
             // 申明接收消息的队列，与发送消息队列"hello"对应

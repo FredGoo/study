@@ -17,7 +17,6 @@ public class ApiController {
 
     private RabbitmqService rabbitmqService;
 
-
     @Autowired
     public void setRabbitmqService(RabbitmqService rabbitmqService) {
         this.rabbitmqService = rabbitmqService;
