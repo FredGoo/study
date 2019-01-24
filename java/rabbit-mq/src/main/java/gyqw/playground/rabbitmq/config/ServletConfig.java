@@ -1,4 +1,4 @@
-package gyqw.xiaobaitu.rabbitmq.config;
+package gyqw.playground.rabbitmq.config;
 
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
@@ -9,28 +9,26 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 /**
  * @author fred
- * 2018/06/13 13:51
+ * 2019-01-24 1:54 PM
  */
 @Configuration
 public class ServletConfig {
+
     @Bean
-    public EmbeddedServletContainerFactory servletContainer() {
-        TomcatEmbeddedServletContainerFactory factory =
-                new TomcatEmbeddedServletContainerFactory();
-        return factory;
+    EmbeddedServletContainerFactory servletContainer() {
+        return new TomcatEmbeddedServletContainerFactory();
     }
 
     @Bean
-    public DispatcherServlet dispatcherServlet() {
+    DispatcherServlet dispatcherServlet() {
         return new DispatcherServlet();
     }
 
     @Bean
-    public CharacterEncodingFilter characterEncodingFilter() {
+    CharacterEncodingFilter characterEncodingFilter() {
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
         filter.setEncoding("UTF-8");
         filter.setForceEncoding(true);
         return filter;
     }
-
 }
