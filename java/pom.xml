@@ -17,6 +17,7 @@
         <module>spring-boot</module>
         <module>data-structure</module>
         <module>graph</module>
+        <module>huiyu</module>
     </modules>
 
     <build>
