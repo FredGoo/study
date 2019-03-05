@@ -1,0 +1,14 @@
+spring.profiles.active=dev
+apiUrl=https=//api.zihuitong.com.cn/
+#批量导入
+batchUrl=open-api/batch
+#批量查询
+queryListUrl=open-api/getcalllist
+#单查询
+queryDetailUrl=open-api/getcalldetail
+appcode=zhongtengxin
+#MD5 秘钥
+appkey=ZZyIWC9JnMeErk2b8A2JFNma14PjVnDlGzA8fn8A
+#账号id，可传的值在开户时告知
+accountid=77
+
