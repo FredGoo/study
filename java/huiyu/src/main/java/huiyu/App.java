@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import huiyu.dto.*;
 import huiyu.service.AiRequest;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,9 +60,9 @@ public class App {
                         StringBuilder sb = new StringBuilder();
                         for (ReturnBatchDetailItem returnBatchDetailItem : returnBatchDetail.getList()) {
                             if (!StringUtils.isEmpty(returnBatchDetailItem.getAtext())) {
-                                sb.append(returnBatchDetailItem.getAtext()).append("\n\r");
+                                sb.append("机器： ").append(returnBatchDetailItem.getAtext()).append("\n\r");
                             } else if (!StringUtils.isEmpty(returnBatchDetailItem.getBtext())) {
-                                sb.append(returnBatchDetailItem.getBtext()).append("\n\r");
+                                sb.append("客户： ").append(returnBatchDetailItem.getBtext()).append("\n\r");
                             }
                         }
 
@@ -86,11 +87,18 @@ public class App {
             OutputStream outputStream = new FileOutputStream(file);
             XSSFWorkbook workbook = new XSSFWorkbook();
 
+            // 换行样式
+            XSSFCellStyle cellStyle = workbook.createCellStyle();
+            cellStyle.setWrapText(true);
+
+            // 日期样式
             XSSFCellStyle cellStyle2 = workbook.createCellStyle();
             XSSFCreationHelper creationHelper = workbook.getCreationHelper();
             cellStyle2.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+            cellStyle2.setVerticalAlignment(VerticalAlignment.CENTER);
 
             XSSFSheet sheet = workbook.createSheet("Sheet1");
+            sheet.setColumnWidth(6, 200 * 256);
             XSSFRow row = sheet.createRow(0);
             row.createCell(0).setCellValue("批次号");
             row.createCell(1).setCellValue("手机");
@@ -107,12 +115,14 @@ public class App {
                 row1.createCell(0).setCellValue(batchNo);
                 row1.createCell(1).setCellValue(excelRow.getPhone());
                 row1.createCell(2).setCellValue(excelRow.getIntent());
-                XSSFCell cell2 = row1.createCell(3);
-                cell2.setCellStyle(cellStyle2);
-                cell2.setCellValue(excelRow.getCallTime());
+                XSSFCell cell3 = row1.createCell(3);
+                cell3.setCellStyle(cellStyle2);
+                cell3.setCellValue(excelRow.getCallTime());
                 row1.createCell(4).setCellValue(excelRow.getCallStatus());
                 row1.createCell(5).setCellValue(excelRow.getCallDuration());
-                row1.createCell(6).setCellValue(excelRow.getCallContent());
+                XSSFCell cell6 = row1.createCell(6);
+                cell6.setCellStyle(cellStyle);
+                cell6.setCellValue(new XSSFRichTextString(excelRow.getCallContent()));
 
                 rowNum++;
             }
