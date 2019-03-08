@@ -29,8 +29,15 @@ public class App {
         AiRequest aiRequest = new AiRequest();
 
         String batchNo = "190209001292";
+        if (args.length > 0 && !StringUtils.isEmpty(args[0])) {
+            batchNo = args[0];
+        } else {
+            logger.error("请输入批次号");
+            return;
+        }
+
         int page = 1;
-        int size = 10;
+        int size = 100;
         int realSize = 0;
         List<ExcelRow> excelRowList = new ArrayList<>();
 
@@ -40,7 +47,8 @@ public class App {
                 BaseResult baseResult = aiRequest.queryList(batchNo, page, size);
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                 ReturnBatchData batchData = gson.fromJson(baseResult.getData().toString(), ReturnBatchData.class);
-                realSize = batchData.getCount();
+                realSize = batchData.getList().size();
+                logger.info("total: " + batchData.getCount() + ", page: " + page + ", size: " + realSize);
 
                 // 遍历详细信息
                 for (ReturnBatchItem batchItem : batchData.getList()) {
@@ -78,8 +86,8 @@ public class App {
             } catch (Exception e) {
                 logger.error("batchNo: " + batchNo + ", page: " + page, e);
             }
-//        } while (realSize >= size);
-        } while (1 != 1);
+        } while (realSize >= size);
+//        } while (1 != 1);
 
         // 保存excel
         try {
