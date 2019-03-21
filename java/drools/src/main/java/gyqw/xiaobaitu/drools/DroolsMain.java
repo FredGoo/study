@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * @author fred
- * @date 2018/07/25 13:05
+ * 2018/07/25 13:05
  */
 public class DroolsMain {
     public static void main(String[] args) {

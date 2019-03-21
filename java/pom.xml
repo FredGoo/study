@@ -18,6 +18,7 @@
         <module>data-structure</module>
         <module>graph</module>
         <module>huiyu</module>
+        <module>hanlp</module>
     </modules>
 
     <build>
@@ -27,8 +28,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
