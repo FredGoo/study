@@ -7,9 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author fred
@@ -37,22 +41,43 @@ public class HanlpMain {
 
     private void sms() {
         try {
+            // 读取数据文件
             BufferedReader br = new BufferedReader(new FileReader("data/test/sms/customer.json"));
             String s;
             StringBuilder stringBuilder = new StringBuilder();
             while ((s = br.readLine()) != null) {
                 stringBuilder.append(s);
             }
+            br.close();
             logger.info("原始json: " + stringBuilder.toString());
 
             ClusterAnalyzer<String> analyzer = new ClusterAnalyzer<>();
             Gson gson = new Gson();
-            List<Map<String, Object>> list = gson.fromJson(stringBuilder.toString(), new TypeToken<List<Map<String, Object>>>() {
+            Map<String, String> smsMap = new HashMap<>();
+            List<Map<String, String>> list = gson.fromJson(stringBuilder.toString(), new TypeToken<List<Map<String, String>>>() {
             }.getType());
-            for (Map<String, Object> map : list) {
-                analyzer.addDocument(map.get("ID").toString(), map.get("SMS_CONTENT").toString());
+            for (Map<String, String> map : list) {
+                analyzer.addDocument(map.get("ID"), map.get("SMS_CONTENT"));
+                smsMap.put(map.get("ID"), map.get("SMS_CONTENT"));
             }
-            logger.info(analyzer.repeatedBisection(1.0).toString());
+            List<Set<String>> analyzerRes = analyzer.repeatedBisection(1.0);
+
+            // 遍历结果
+            BufferedWriter bw = new BufferedWriter(new FileWriter("data/test/sms/result.txt"));
+            int group = 0;
+            for (Set<String> set : analyzerRes) {
+                bw.write("group" + group);
+                bw.newLine();
+
+                for (String s1 : set) {
+                    bw.write("ID: " + s1 + ", SMS_CONTENT: " + smsMap.get(s1));
+                    bw.newLine();
+                }
+
+                bw.newLine();
+                group++;
+            }
+            bw.close();
         } catch (Exception e) {
             logger.error("sms error", e);
         }
