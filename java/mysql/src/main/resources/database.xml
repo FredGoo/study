@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <bean id="fundSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="fundDataSource"/>
+        <property name="typeAliasesPackage" value="geex.datasource.domain"/>
+        <property name="mapperLocations" value="classpath:fund/*.xml"/>
+    </bean>
+
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="gyqw.mysqltx.mapper"/>
+        <property name="properties">
+            <value>
+                mappers=gyqw.mysqltx.BaseMapper
+                notEmpty=false
+                IDENTITY=MYSQL
+            </value>
+        </property>
+        <property name="sqlSessionFactoryBeanName" value="fundSqlSessionFactory"/>
+    </bean>
+
+    <bean id="fundDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://192.168.7.197:3306/fund?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true"/>
+        <property name="username" value="robin"/>
+        <property name="password" value="robin"/>
+        <property name="initialSize" value="20"/>
+        <property name="maxIdle" value="30"/>
+        <property name="minIdle" value="5"/>
+        <property name="connectionProperties" value="clientEncoding=utf-8"/>
+        <property name="validationQuery" value="SELECT 1"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="testWhileIdle" value="true"/>
+    </bean>
+
+</beans>

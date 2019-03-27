@@ -19,6 +19,7 @@
         <module>graph</module>
         <module>huiyu</module>
         <module>hanlp</module>
+        <module>mysql</module>
     </modules>
 
     <build>
